@@ -1,0 +1,957 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Fawry Delivery App - تطبيق المندوب</title>
+    <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+    <style>
+        :root {
+            --primary: #00B894;
+            --secondary: #0984E3;
+            --success: #2ECC71;
+            --warning: #F39C12;
+            --error: #E74C3C;
+            --dark: #0D1117;
+            --surface: #161B22;
+            --text: #333;
+            --text-light: #6c757d;
+            --gradient: linear-gradient(135deg, #00B894 0%, #0984E3 100%);
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Cairo', sans-serif;
+            background: #f8f9fa;
+            color: var(--text);
+            line-height: 1.8;
+            overflow-x: hidden;
+        }
+
+        /* Navigation */
+        .nav-bar {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            z-index: 1000;
+            padding: 15px 40px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            background: rgba(13, 17, 23, 0.95);
+            backdrop-filter: blur(20px);
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+            transition: all 0.3s ease;
+        }
+
+        .nav-logo {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            color: white;
+            text-decoration: none;
+            font-size: 1.4rem;
+            font-weight: 700;
+        }
+
+        .nav-logo i {
+            color: var(--primary);
+            font-size: 1.6rem;
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 25px;
+            list-style: none;
+            align-items: center;
+        }
+
+        .nav-links a {
+            color: rgba(255, 255, 255, 0.7);
+            text-decoration: none;
+            font-weight: 500;
+            transition: all 0.3s ease;
+            font-size: 0.95rem;
+        }
+
+        .nav-links a:hover {
+            color: var(--primary);
+        }
+
+        .nav-links .main-link {
+            background: var(--gradient);
+            color: white;
+            padding: 10px 25px;
+            border-radius: 25px;
+            font-weight: 600;
+        }
+
+        .nav-links .main-link:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 20px rgba(0, 184, 148, 0.3);
+        }
+
+        /* Hero Section */
+        .hero {
+            background: var(--gradient);
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .hero::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><circle cx="50" cy="50" r="40" fill="none" stroke="rgba(255,255,255,0.1)" stroke-width="0.5"/></svg>') repeat;
+            opacity: 0.5;
+        }
+
+        .hero-content {
+            text-align: center;
+            z-index: 1;
+            padding: 20px;
+            animation: fadeInUp 1s ease;
+        }
+
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .hero-icon {
+            width: 150px;
+            height: 150px;
+            background: rgba(255, 255, 255, 0.2);
+            border-radius: 40px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto 30px;
+            font-size: 70px;
+            color: white;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.2);
+            animation: pulse 2s infinite;
+        }
+
+        @keyframes pulse {
+
+            0%,
+            100% {
+                transform: scale(1);
+                box-shadow: 0 20px 60px rgba(0, 0, 0, 0.2);
+            }
+
+            50% {
+                transform: scale(1.05);
+                box-shadow: 0 25px 80px rgba(0, 0, 0, 0.3);
+            }
+        }
+
+        .hero h1 {
+            font-size: 3.5rem;
+            color: white;
+            font-weight: 800;
+            margin-bottom: 15px;
+            text-shadow: 2px 2px 10px rgba(0, 0, 0, 0.2);
+        }
+
+        .hero p {
+            font-size: 1.4rem;
+            color: rgba(255, 255, 255, 0.9);
+            max-width: 600px;
+            margin: 0 auto 40px;
+        }
+
+        .hero-stats {
+            display: flex;
+            justify-content: center;
+            gap: 40px;
+            flex-wrap: wrap;
+        }
+
+        .stat-box {
+            background: rgba(255, 255, 255, 0.15);
+            backdrop-filter: blur(10px);
+            padding: 25px 40px;
+            border-radius: 20px;
+            text-align: center;
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            transition: transform 0.3s ease;
+        }
+
+        .stat-box:hover {
+            transform: translateY(-5px);
+        }
+
+        .stat-box h3 {
+            font-size: 2.5rem;
+            color: white;
+            font-weight: 800;
+        }
+
+        .stat-box p {
+            color: rgba(255, 255, 255, 0.8);
+            font-size: 1rem;
+            margin: 0;
+        }
+
+        /* Sections */
+        section {
+            padding: 80px 20px;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .section-title {
+            text-align: center;
+            margin-bottom: 60px;
+        }
+
+        .section-title h2 {
+            font-size: 2.5rem;
+            color: var(--dark);
+            font-weight: 800;
+            margin-bottom: 15px;
+        }
+
+        .section-title p {
+            color: var(--text-light);
+            font-size: 1.2rem;
+            max-width: 600px;
+            margin: 0 auto;
+        }
+
+        /* Features */
+        .features {
+            background: white;
+        }
+
+        .features-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+            gap: 30px;
+        }
+
+        .feature-card {
+            background: linear-gradient(145deg, #f8f9fa, #ffffff);
+            padding: 35px;
+            border-radius: 20px;
+            box-shadow: 0 10px 40px rgba(0, 0, 0, 0.08);
+            transition: all 0.4s ease;
+            border: 1px solid #eee;
+        }
+
+        .feature-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 20px 60px rgba(0, 184, 148, 0.15);
+        }
+
+        .feature-icon {
+            width: 70px;
+            height: 70px;
+            background: var(--gradient);
+            border-radius: 18px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 30px;
+            color: white;
+            margin-bottom: 20px;
+        }
+
+        .feature-card h3 {
+            font-size: 1.4rem;
+            color: var(--dark);
+            margin-bottom: 12px;
+            font-weight: 700;
+        }
+
+        .feature-card p {
+            color: var(--text-light);
+            line-height: 1.8;
+        }
+
+        /* Screens Section */
+        .screens {
+            background: linear-gradient(180deg, #f8f9fa 0%, #e9ecef 100%);
+        }
+
+        .modules-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 25px;
+        }
+
+        .module-card {
+            background: white;
+            border-radius: 20px;
+            overflow: hidden;
+            box-shadow: 0 10px 40px rgba(0, 0, 0, 0.08);
+            transition: all 0.3s ease;
+        }
+
+        .module-card:hover {
+            transform: scale(1.02);
+            box-shadow: 0 15px 50px rgba(0, 0, 0, 0.12);
+        }
+
+        .module-header {
+            padding: 25px;
+            color: white;
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+
+        .module-header.auth {
+            background: var(--gradient);
+        }
+
+        .module-header.orders {
+            background: linear-gradient(135deg, #0984E3, #6c5ce7);
+        }
+
+        .module-header.earnings {
+            background: linear-gradient(135deg, #2ECC71, #00B894);
+        }
+
+        .module-header.communication {
+            background: linear-gradient(135deg, #F39C12, #E74C3C);
+        }
+
+        .module-header.settings {
+            background: linear-gradient(135deg, #6c757d, #495057);
+        }
+
+        .module-header i {
+            font-size: 30px;
+        }
+
+        .module-header h3 {
+            font-size: 1.3rem;
+            font-weight: 700;
+        }
+
+        .screen-list {
+            padding: 20px;
+        }
+
+        .screen-item {
+            display: flex;
+            align-items: center;
+            padding: 12px;
+            border-radius: 10px;
+            margin-bottom: 8px;
+            background: #f8f9fa;
+            transition: all 0.2s ease;
+        }
+
+        .screen-item:hover {
+            background: #e9ecef;
+        }
+
+        .screen-number {
+            width: 35px;
+            height: 35px;
+            background: var(--gradient);
+            color: white;
+            border-radius: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 700;
+            margin-left: 15px;
+            font-size: 0.9rem;
+        }
+
+        .screen-info h4 {
+            font-size: 1rem;
+            color: var(--dark);
+            margin-bottom: 2px;
+        }
+
+        .screen-info p {
+            font-size: 0.85rem;
+            color: var(--text-light);
+            margin: 0;
+        }
+
+        /* Tech Stack */
+        .tech-stack {
+            background: var(--dark);
+            color: white;
+        }
+
+        .tech-stack .section-title h2 {
+            color: white;
+        }
+
+        .tech-grid {
+            display: flex;
+            justify-content: center;
+            flex-wrap: wrap;
+            gap: 30px;
+        }
+
+        .tech-item {
+            background: var(--surface);
+            padding: 30px 50px;
+            border-radius: 20px;
+            text-align: center;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            transition: all 0.3s ease;
+        }
+
+        .tech-item:hover {
+            transform: translateY(-5px);
+            background: rgba(255, 255, 255, 0.1);
+        }
+
+        .tech-item i {
+            font-size: 40px;
+            margin-bottom: 15px;
+            background: var(--gradient);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .tech-item h4 {
+            font-size: 1.1rem;
+            margin-bottom: 5px;
+        }
+
+        .tech-item p {
+            color: rgba(255, 255, 255, 0.6);
+            font-size: 0.9rem;
+        }
+
+        /* CTA */
+        .cta {
+            background: var(--gradient);
+            text-align: center;
+            padding: 100px 20px;
+        }
+
+        .cta h2 {
+            font-size: 2.5rem;
+            color: white;
+            margin-bottom: 20px;
+            font-weight: 800;
+        }
+
+        .cta p {
+            color: rgba(255, 255, 255, 0.9);
+            font-size: 1.2rem;
+            max-width: 500px;
+            margin: 0 auto 40px;
+        }
+
+        .cta-buttons {
+            display: flex;
+            justify-content: center;
+            gap: 20px;
+            flex-wrap: wrap;
+        }
+
+        .btn {
+            padding: 18px 45px;
+            border-radius: 50px;
+            font-size: 1.1rem;
+            font-weight: 700;
+            text-decoration: none;
+            transition: all 0.3s ease;
+            display: inline-flex;
+            align-items: center;
+            gap: 10px;
+            font-family: 'Cairo', sans-serif;
+            cursor: pointer;
+            border: none;
+        }
+
+        .btn-white {
+            background: white;
+            color: var(--primary);
+        }
+
+        .btn-white:hover {
+            transform: scale(1.05);
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+        }
+
+        .btn-outline {
+            background: transparent;
+            color: white;
+            border: 2px solid rgba(255, 255, 255, 0.5);
+        }
+
+        .btn-outline:hover {
+            background: rgba(255, 255, 255, 0.1);
+            border-color: white;
+        }
+
+        /* Footer */
+        footer {
+            background: var(--dark);
+            color: white;
+            padding: 40px 20px;
+            text-align: center;
+        }
+
+        footer p {
+            color: rgba(255, 255, 255, 0.6);
+        }
+
+        footer .copyright {
+            margin-top: 20px;
+            padding-top: 20px;
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            .hero h1 {
+                font-size: 2.5rem;
+            }
+
+            .hero p {
+                font-size: 1.1rem;
+            }
+
+            .stat-box {
+                padding: 20px 30px;
+            }
+
+            .stat-box h3 {
+                font-size: 2rem;
+            }
+
+            .section-title h2 {
+                font-size: 2rem;
+            }
+
+            .features-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .modules-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        /* Animations */
+        .fade-in {
+            opacity: 0;
+            transform: translateY(30px);
+            transition: all 0.6s ease;
+        }
+
+        .fade-in.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+    </style>
+</head>
+
+<body>
+    <!-- Navigation Bar -->
+    <nav class="nav-bar">
+        <a href="MARKETING_LANDING.html" class="nav-logo">
+            <i class="fas fa-shipping-fast"></i>
+            فوري دليفري
+        </a>
+        <ul class="nav-links">
+            <li><a href="CUSTOMER_APP_LANDING.html">تطبيق العميل</a></li>
+            <li><a href="MERCHANT_APP_LANDING_PAGE.html">تطبيق التاجر</a></li>
+            <li><a href="DELIVERY_APP_LANDING.html">تطبيق المندوب</a></li>
+            <li><a href="ADMIN_LANDING_PAGE.html">لوحة التحكم</a></li>
+            <li><a href="MARKETING_LANDING.html" class="main-link">الشراكات</a></li>
+        </ul>
+    </nav>
+
+    <!-- Hero Section -->
+    <section class="hero" style="padding-top: 100px;">
+        <div class="hero-content">
+            <div class="hero-icon">
+                <i class="fas fa-truck-fast"></i>
+            </div>
+            <h1>🚚 Fawry Delivery App</h1>
+            <p>تطبيق احترافي للمناديب - إدارة الطلبات والتوصيل بكفاءة عالية</p>
+            <div class="hero-stats">
+                <div class="stat-box">
+                    <h3>18</h3>
+                    <p>شاشة متكاملة</p>
+                </div>
+                <div class="stat-box">
+                    <h3>21+</h3>
+                    <p>API Endpoint</p>
+                </div>
+                <div class="stat-box">
+                    <h3>5</h3>
+                    <p>وحدات رئيسية</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Features Section -->
+    <section class="features">
+        <div class="container">
+            <div class="section-title">
+                <h2>✨ المميزات الرئيسية</h2>
+                <p>تطبيق متكامل مع جميع الأدوات التي يحتاجها المندوب</p>
+            </div>
+            <div class="features-grid">
+                <div class="feature-card fade-in">
+                    <div class="feature-icon"><i class="fas fa-location-crosshairs"></i></div>
+                    <h3>تتبع الموقع في الوقت الحقيقي</h3>
+                    <p>تتبع موقع المندوب وعرض الموقع للعميل مع حساب المسافة والوقت المتوقع للوصول</p>
+                </div>
+                <div class="feature-card fade-in">
+                    <div class="feature-icon"><i class="fas fa-route"></i></div>
+                    <h3>التنقل والملاحة</h3>
+                    <p>تكامل مع خرائط Google للملاحة مع عرض المسار الأمثل للتوصيل</p>
+                </div>
+                <div class="feature-card fade-in">
+                    <div class="feature-icon"><i class="fas fa-wallet"></i></div>
+                    <h3>إدارة الأرباح</h3>
+                    <p>لوحة تحكم شاملة للأرباح اليومية والأسبوعية مع رسوم بيانية تفاعلية</p>
+                </div>
+                <div class="feature-card fade-in">
+                    <div class="feature-icon"><i class="fas fa-comments"></i></div>
+                    <h3>الدردشة الفورية</h3>
+                    <p>تواصل مباشر مع العميل أو المتجر مع رسائل سريعة جاهزة</p>
+                </div>
+                <div class="feature-card fade-in">
+                    <div class="feature-icon"><i class="fas fa-bell"></i></div>
+                    <h3>إشعارات ذكية</h3>
+                    <p>إشعارات فورية للطلبات الجديدة والتحديثات مع التكامل مع Supabase</p>
+                </div>
+                <div class="feature-card fade-in">
+                    <div class="feature-icon"><i class="fas fa-shield-halved"></i></div>
+                    <h3>نظام SOS للطوارئ</h3>
+                    <p>زر طوارئ سريع مع إرسال الموقع تلقائياً للدعم الفني</p>
+                </div>
+                <div class="feature-card fade-in">
+                    <div class="feature-icon"><i class="fas fa-moon"></i></div>
+                    <h3>الوضع الداكن</h3>
+                    <p>دعم كامل للوضع الداكن مع تصميم الخريطة الليلي للقيادة المريحة</p>
+                </div>
+                <div class="feature-card fade-in">
+                    <div class="feature-icon"><i class="fas fa-language"></i></div>
+                    <h3>دعم RTL الكامل</h3>
+                    <p>تصميم متوافق مع اللغة العربية مع خط Cairo الاحترافي</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Screens Section -->
+    <section class="screens">
+        <div class="container">
+            <div class="section-title">
+                <h2>📱 الشاشات (18 شاشة)</h2>
+                <p>جميع الشاشات المطلوبة لتجربة مندوب متكاملة</p>
+            </div>
+            <div class="modules-grid">
+                <!-- Auth Module -->
+                <div class="module-card">
+                    <div class="module-header auth">
+                        <i class="fas fa-user-lock"></i>
+                        <h3>وحدة المصادقة (3 شاشات)</h3>
+                    </div>
+                    <div class="screen-list">
+                        <div class="screen-item">
+                            <div class="screen-number">1</div>
+                            <div class="screen-info">
+                                <h4>Splash Screen</h4>
+                                <p>شاشة البداية والتحقق من الجلسة</p>
+                            </div>
+                        </div>
+                        <div class="screen-item">
+                            <div class="screen-number">2</div>
+                            <div class="screen-info">
+                                <h4>Login Screen</h4>
+                                <p>تسجيل الدخول بالإيميل أو الجوال</p>
+                            </div>
+                        </div>
+                        <div class="screen-item">
+                            <div class="screen-number">3</div>
+                            <div class="screen-info">
+                                <h4>Profile Screen</h4>
+                                <p>عرض وتعديل الملف الشخصي</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Orders Module -->
+                <div class="module-card">
+                    <div class="module-header orders">
+                        <i class="fas fa-boxes-stacked"></i>
+                        <h3>وحدة الطلبات (7 شاشات)</h3>
+                    </div>
+                    <div class="screen-list">
+                        <div class="screen-item">
+                            <div class="screen-number">4</div>
+                            <div class="screen-info">
+                                <h4>Available Orders</h4>
+                                <p>الطلبات المتاحة للقبول</p>
+                            </div>
+                        </div>
+                        <div class="screen-item">
+                            <div class="screen-number">5</div>
+                            <div class="screen-info">
+                                <h4>My Active Orders</h4>
+                                <p>طلباتي النشطة</p>
+                            </div>
+                        </div>
+                        <div class="screen-item">
+                            <div class="screen-number">6</div>
+                            <div class="screen-info">
+                                <h4>Order Details</h4>
+                                <p>تفاصيل الطلب والعميل</p>
+                            </div>
+                        </div>
+                        <div class="screen-item">
+                            <div class="screen-number">7</div>
+                            <div class="screen-info">
+                                <h4>Navigation Map</h4>
+                                <p>خريطة التوصيل والملاحة</p>
+                            </div>
+                        </div>
+                        <div class="screen-item">
+                            <div class="screen-number">8</div>
+                            <div class="screen-info">
+                                <h4>Delivery Confirmation</h4>
+                                <p>تأكيد التسليم بالتوقيع/الصورة</p>
+                            </div>
+                        </div>
+                        <div class="screen-item">
+                            <div class="screen-number">9</div>
+                            <div class="screen-info">
+                                <h4>Order History</h4>
+                                <p>سجل الطلبات المكتملة</p>
+                            </div>
+                        </div>
+                        <div class="screen-item">
+                            <div class="screen-number">10</div>
+                            <div class="screen-info">
+                                <h4>Report Issue</h4>
+                                <p>الإبلاغ عن مشكلة</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Earnings Module -->
+                <div class="module-card">
+                    <div class="module-header earnings">
+                        <i class="fas fa-coins"></i>
+                        <h3>وحدة الأرباح (3 شاشات)</h3>
+                    </div>
+                    <div class="screen-list">
+                        <div class="screen-item">
+                            <div class="screen-number">11</div>
+                            <div class="screen-info">
+                                <h4>Earnings Dashboard</h4>
+                                <p>لوحة تحكم الأرباح</p>
+                            </div>
+                        </div>
+                        <div class="screen-item">
+                            <div class="screen-number">12</div>
+                            <div class="screen-info">
+                                <h4>Daily Earnings</h4>
+                                <p>تفاصيل أرباح اليوم</p>
+                            </div>
+                        </div>
+                        <div class="screen-item">
+                            <div class="screen-number">13</div>
+                            <div class="screen-info">
+                                <h4>Payments History</h4>
+                                <p>سجل المدفوعات والتحويلات</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Communication Module -->
+                <div class="module-card">
+                    <div class="module-header communication">
+                        <i class="fas fa-message"></i>
+                        <h3>وحدة التواصل (2 شاشات)</h3>
+                    </div>
+                    <div class="screen-list">
+                        <div class="screen-item">
+                            <div class="screen-number">14</div>
+                            <div class="screen-info">
+                                <h4>Chat Screen</h4>
+                                <p>الدردشة مع العميل</p>
+                            </div>
+                        </div>
+                        <div class="screen-item">
+                            <div class="screen-number">15</div>
+                            <div class="screen-info">
+                                <h4>Notifications</h4>
+                                <p>مركز الإشعارات</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Settings Module -->
+                <div class="module-card">
+                    <div class="module-header settings">
+                        <i class="fas fa-gear"></i>
+                        <h3>وحدة الإعدادات (3 شاشات)</h3>
+                    </div>
+                    <div class="screen-list">
+                        <div class="screen-item">
+                            <div class="screen-number">16</div>
+                            <div class="screen-info">
+                                <h4>Settings Screen</h4>
+                                <p>الإعدادات العامة</p>
+                            </div>
+                        </div>
+                        <div class="screen-item">
+                            <div class="screen-number">17</div>
+                            <div class="screen-info">
+                                <h4>Online Status</h4>
+                                <p>متصل / غير متصل</p>
+                            </div>
+                        </div>
+                        <div class="screen-item">
+                            <div class="screen-number">18</div>
+                            <div class="screen-info">
+                                <h4>Account Settings</h4>
+                                <p>إعدادات الحساب والبيانات</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Tech Stack -->
+    <section class="tech-stack">
+        <div class="container">
+            <div class="section-title">
+                <h2>🛠️ التقنيات المستخدمة</h2>
+            </div>
+            <div class="tech-grid">
+                <div class="tech-item">
+                    <i class="fab fa-flutter"></i>
+                    <h4>Flutter 3.16+</h4>
+                    <p>Cross-Platform</p>
+                </div>
+                <div class="tech-item">
+                    <i class="fas fa-database"></i>
+                    <h4>Supabase</h4>
+                    <p>Backend as Service</p>
+                </div>
+                <div class="tech-item">
+                    <i class="fas fa-map-marked-alt"></i>
+                    <h4>Google Maps</h4>
+                    <p>Maps & Navigation</p>
+                </div>
+                <div class="tech-item">
+                    <i class="fas fa-code-branch"></i>
+                    <h4>Riverpod 2.0</h4>
+                    <p>State Management</p>
+                </div>
+                <div class="tech-item">
+                    <i class="fas fa-lock"></i>
+                    <h4>Secure Auth</h4>
+                    <p>JWT & Supabase Auth</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- CTA -->
+    <section class="cta">
+        <h2>🚀 ابدأ الآن</h2>
+        <p>تطبيق جاهز للإطلاق مع كود نظيف 100% وبدون أخطاء</p>
+        <div class="cta-buttons">
+            <a href="#" class="btn btn-white">
+                <i class="fab fa-android"></i>
+                تحميل للأندرويد
+            </a>
+            <a href="#" class="btn btn-outline">
+                <i class="fab fa-apple"></i>
+                تحميل للآيفون
+            </a>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer>
+        <p><i class="fas fa-code"></i> مطور بواسطة <strong>Fawry Team</strong></p>
+        <div class="copyright">
+            <p>© 2025 Fawry Delivery - جميع الحقوق محفوظة</p>
+        </div>
+    </footer>
+
+    <script>
+        // Scroll Animation
+        const fadeElements = document.querySelectorAll('.fade-in');
+
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('visible');
+                }
+            });
+        }, { threshold: 0.1 });
+
+        fadeElements.forEach(el => observer.observe(el));
+
+        // Smooth scroll for anchor links
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                const target = document.querySelector(this.getAttribute('href'));
+                if (target) {
+                    target.scrollIntoView({ behavior: 'smooth' });
+                }
+            });
+        });
+
+        // Parallax effect on hero
+        window.addEventListener('scroll', () => {
+            const hero = document.querySelector('.hero-content');
+            const scrolled = window.pageYOffset;
+            if (hero && scrolled < window.innerHeight) {
+                hero.style.transform = `translateY(${scrolled * 0.3}px)`;
+                hero.style.opacity = 1 - (scrolled / window.innerHeight);
+            }
+        });
+    </script>
+</body>
+
+</html>
