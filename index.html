@@ -980,7 +980,219 @@
             color: var(--text-muted);
         }
 
-        /* Responsive */
+        /* Mobile Menu */
+        .mobile-menu-btn {
+            display: none;
+            background: none;
+            border: none;
+            color: var(--text-light);
+            font-size: 1.5rem;
+            cursor: pointer;
+            padding: 8px;
+        }
+
+        .mobile-menu {
+            display: none;
+            position: fixed;
+            top: 70px;
+            left: 0;
+            right: 0;
+            background: var(--dark-surface);
+            padding: 20px;
+            border-bottom: 1px solid var(--glass-border);
+            z-index: 999;
+        }
+
+        .mobile-menu.active {
+            display: block;
+        }
+
+        .mobile-menu a {
+            display: block;
+            padding: 15px 20px;
+            color: var(--text-muted);
+            text-decoration: none;
+            border-bottom: 1px solid var(--glass-border);
+            transition: all 0.3s;
+        }
+
+        .mobile-menu a:hover {
+            color: var(--primary);
+            background: rgba(14, 165, 233, 0.1);
+        }
+
+        /* Team Section */
+        .team-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 30px;
+            max-width: 900px;
+            margin: 0 auto;
+        }
+
+        .team-card {
+            background: var(--dark-surface);
+            border: 1px solid var(--glass-border);
+            border-radius: 25px;
+            padding: 35px;
+            text-align: center;
+            transition: all 0.3s;
+        }
+
+        .team-card:hover {
+            transform: translateY(-8px);
+            border-color: var(--primary);
+        }
+
+        .team-avatar {
+            width: 100px;
+            height: 100px;
+            background: var(--gradient-main);
+            border-radius: 50%;
+            margin: 0 auto 20px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 2.5rem;
+            color: white;
+        }
+
+        .team-card h4 {
+            font-size: 1.3rem;
+            margin-bottom: 5px;
+        }
+
+        .team-card .role {
+            color: var(--primary);
+            font-size: 0.95rem;
+            margin-bottom: 15px;
+        }
+
+        .team-card p {
+            color: var(--text-muted);
+            font-size: 0.9rem;
+        }
+
+        /* Targets Section */
+        .targets-grid {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 25px;
+            max-width: 1100px;
+            margin: 0 auto;
+        }
+
+        .target-card {
+            background: var(--dark-surface);
+            border: 1px solid var(--glass-border);
+            border-radius: 20px;
+            padding: 30px;
+            text-align: center;
+            transition: all 0.3s;
+        }
+
+        .target-card:hover {
+            border-color: var(--secondary);
+            transform: translateY(-5px);
+        }
+
+        .target-card .target-value {
+            font-size: 2.5rem;
+            font-weight: 800;
+            background: var(--gradient-main);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            margin-bottom: 10px;
+        }
+
+        .target-card .target-label {
+            color: var(--text-muted);
+            font-size: 0.95rem;
+        }
+
+        .target-card .target-time {
+            color: var(--secondary);
+            font-size: 0.85rem;
+            margin-top: 8px;
+        }
+
+        /* Trust Badges */
+        .trust-badges {
+            display: flex;
+            justify-content: center;
+            gap: 30px;
+            flex-wrap: wrap;
+            margin-top: 30px;
+        }
+
+        .trust-badge {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            background: var(--glass);
+            border: 1px solid var(--glass-border);
+            padding: 12px 20px;
+            border-radius: 50px;
+            font-size: 0.9rem;
+            color: var(--text-muted);
+        }
+
+        .trust-badge i {
+            color: var(--secondary);
+        }
+
+        /* Video Section */
+        .video-container {
+            max-width: 900px;
+            margin: 0 auto;
+            position: relative;
+            border-radius: 25px;
+            overflow: hidden;
+            background: var(--dark-card);
+            aspect-ratio: 16/9;
+        }
+
+        .video-placeholder {
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            background: linear-gradient(135deg, rgba(14, 165, 233, 0.2), rgba(16, 185, 129, 0.2));
+        }
+
+        .video-placeholder i {
+            font-size: 5rem;
+            color: white;
+            margin-bottom: 20px;
+            opacity: 0.9;
+        }
+
+        .video-placeholder span {
+            color: white;
+            font-size: 1.2rem;
+            font-weight: 600;
+        }
+
+        /* Enhanced Responsive - All Screen Sizes */
+        @media (max-width: 1280px) {
+            .hero {
+                padding: 120px 60px 80px;
+            }
+
+            section {
+                padding: 80px 60px;
+            }
+
+            .eco-grid {
+                gap: 20px;
+            }
+        }
+
         @media (max-width: 1024px) {
             .hero {
                 flex-direction: column;
@@ -1028,6 +1240,18 @@
             .features-list {
                 grid-template-columns: 1fr;
             }
+
+            .team-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+
+            .targets-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+
+            .section-title {
+                font-size: 2rem;
+            }
         }
 
         @media (max-width: 768px) {
@@ -1039,16 +1263,68 @@
                 display: none;
             }
 
+            .nav-cta {
+                display: none;
+            }
+
+            .mobile-menu-btn {
+                display: block;
+            }
+
             section {
                 padding: 60px 20px;
             }
 
+            .hero {
+                padding: 100px 20px 50px;
+            }
+
             .hero h1 {
-                font-size: 2rem;
+                font-size: 1.8rem;
+                line-height: 1.4;
+            }
+
+            .hero p {
+                font-size: 1rem;
+            }
+
+            .hero-badge {
+                font-size: 0.85rem;
+                padding: 8px 15px;
+            }
+
+            .hero-buttons {
+                flex-direction: column;
+                gap: 12px;
+            }
+
+            .btn {
+                width: 100%;
+                justify-content: center;
+                padding: 14px 25px;
+            }
+
+            .hero-graphic {
+                width: 250px;
+                height: 250px;
+            }
+
+            .hero-graphic i {
+                font-size: 100px;
+            }
+
+            .hero-graphic::before {
+                width: 300px;
+                height: 300px;
             }
 
             .eco-grid {
                 grid-template-columns: 1fr;
+                gap: 15px;
+            }
+
+            .eco-card {
+                padding: 25px 20px;
             }
 
             .business-grid {
@@ -1059,6 +1335,80 @@
                 display: none;
             }
 
+            .flow-grid {
+                gap: 20px;
+            }
+
+            .flow-icon {
+                width: 80px;
+                height: 80px;
+                font-size: 2rem;
+            }
+
+            .section-title {
+                font-size: 1.6rem;
+            }
+
+            .section-subtitle {
+                font-size: 1rem;
+            }
+
+            .tab-btn {
+                padding: 10px 20px;
+                font-size: 0.9rem;
+            }
+
+            .tab-inner {
+                padding: 25px 20px;
+            }
+
+            .tab-inner h3 {
+                font-size: 1.4rem;
+            }
+
+            .investor-content h2 {
+                font-size: 1.8rem;
+            }
+
+            .investor-content p {
+                font-size: 1rem;
+            }
+
+            .investor-points {
+                gap: 15px;
+            }
+
+            .investor-point {
+                font-size: 0.9rem;
+            }
+
+            .investor-buttons {
+                flex-direction: column;
+            }
+
+            .btn-white,
+            .btn-outline-white {
+                width: 100%;
+                justify-content: center;
+            }
+
+            .contact-grid {
+                gap: 15px;
+            }
+
+            .contact-card {
+                padding: 20px;
+                width: 100%;
+            }
+
+            .contact-card i {
+                font-size: 1.5rem;
+            }
+
+            .contact-card span {
+                font-size: 1rem;
+            }
+
             footer {
                 padding: 40px 20px 20px;
             }
@@ -1066,6 +1416,101 @@
             .footer-content {
                 flex-direction: column;
                 text-align: center;
+                gap: 20px;
+            }
+
+            .footer-links {
+                flex-wrap: wrap;
+                justify-content: center;
+                gap: 15px;
+            }
+
+            .team-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .targets-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .trust-badges {
+                gap: 15px;
+            }
+
+            .trust-badge {
+                padding: 10px 15px;
+                font-size: 0.8rem;
+            }
+
+            .roadmap-grid {
+                gap: 20px;
+            }
+
+            .roadmap-item {
+                padding: 25px 20px;
+                min-width: 100%;
+            }
+
+            .matrix-table {
+                font-size: 0.85rem;
+            }
+
+            .matrix-table th,
+            .matrix-table td {
+                padding: 12px 10px;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .logo {
+                font-size: 1.2rem;
+            }
+
+            .logo i {
+                font-size: 1.4rem;
+            }
+
+            .hero h1 {
+                font-size: 1.5rem;
+            }
+
+            .hero-graphic {
+                width: 200px;
+                height: 200px;
+            }
+
+            .hero-graphic i {
+                font-size: 80px;
+            }
+
+            .section-title {
+                font-size: 1.4rem;
+            }
+
+            .eco-icon {
+                width: 60px;
+                height: 60px;
+                font-size: 1.5rem;
+            }
+
+            .eco-card h3 {
+                font-size: 1.1rem;
+            }
+
+            .ps-card {
+                padding: 25px 20px;
+            }
+
+            .ps-card h3 {
+                font-size: 1.2rem;
+            }
+
+            .video-placeholder i {
+                font-size: 3rem;
+            }
+
+            .video-placeholder span {
+                font-size: 1rem;
             }
         }
     </style>
@@ -1086,7 +1531,19 @@
             <li><a href="#contact">تواصل</a></li>
         </ul>
         <a href="#investor" class="nav-cta">احجز عرض للمستثمر</a>
+        <button class="mobile-menu-btn" onclick="toggleMobileMenu()">
+            <i class="fas fa-bars"></i>
+        </button>
     </nav>
+
+    <!-- Mobile Menu -->
+    <div class="mobile-menu" id="mobileMenu">
+        <a href="#ecosystem" onclick="toggleMobileMenu()">المنظومة</a>
+        <a href="#features" onclick="toggleMobileMenu()">المميزات</a>
+        <a href="#business" onclick="toggleMobileMenu()">نموذج العمل</a>
+        <a href="#investor" onclick="toggleMobileMenu()">للمستثمر</a>
+        <a href="#contact" onclick="toggleMobileMenu()">تواصل</a>
+    </div>
 
     <!-- Hero -->
     <section class="hero">
@@ -1477,6 +1934,42 @@
         </div>
     </section>
 
+    <!-- Targets Section -->
+    <section class="matrix-section">
+        <div class="section-header" data-aos="fade-up">
+            <div class="section-tag"><i class="fas fa-bullseye"></i> مستهدفات 2025</div>
+            <h2 class="section-title">جاهزون للإطلاق وخطة نمو واضحة</h2>
+        </div>
+        <div class="targets-grid" data-aos="fade-up">
+            <div class="target-card">
+                <div class="target-value" data-target="500">500+</div>
+                <div class="target-label">طلب يومياً</div>
+                <div class="target-time">خلال 6 أشهر</div>
+            </div>
+            <div class="target-card">
+                <div class="target-value" data-target="50">50+</div>
+                <div class="target-label">تاجر نشط</div>
+                <div class="target-time">خلال 3 أشهر</div>
+            </div>
+            <div class="target-card">
+                <div class="target-value" data-target="30">30+</div>
+                <div class="target-label">مندوب</div>
+                <div class="target-time">خلال 3 أشهر</div>
+            </div>
+            <div class="target-card">
+                <div class="target-value">25</div>
+                <div class="target-label">دقيقة متوسط التوصيل</div>
+                <div class="target-time">الهدف المستهدف</div>
+            </div>
+        </div>
+        <div class="trust-badges" data-aos="fade-up" data-aos-delay="100">
+            <div class="trust-badge"><i class="fab fa-flutter"></i> مبني على Flutter</div>
+            <div class="trust-badge"><i class="fas fa-database"></i> Supabase Backend</div>
+            <div class="trust-badge"><i class="fas fa-shield-alt"></i> متوافق مع PDPL</div>
+            <div class="trust-badge"><i class="fas fa-mobile-alt"></i> iOS & Android</div>
+        </div>
+    </section>
+
     <!-- Investor CTA -->
     <section class="investor-section" id="investor">
         <div class="investor-content" data-aos="fade-up">
@@ -1557,6 +2050,20 @@
     <script>
         AOS.init({ duration: 800, easing: 'ease-out-cubic', once: true });
 
+        // Mobile menu toggle
+        function toggleMobileMenu() {
+            const menu = document.getElementById('mobileMenu');
+            menu.classList.toggle('active');
+        }
+
+        // Close mobile menu on scroll
+        window.addEventListener('scroll', () => {
+            const menu = document.getElementById('mobileMenu');
+            if (menu.classList.contains('active')) {
+                menu.classList.remove('active');
+            }
+        });
+
         // Tabs functionality
         const tabBtns = document.querySelectorAll('.tab-btn');
         const tabContents = document.querySelectorAll('.tab-content');
@@ -1569,6 +2076,39 @@
                 document.getElementById(btn.dataset.tab).classList.add('active');
             });
         });
+
+        // Counter animation for targets
+        function animateCounters() {
+            const counters = document.querySelectorAll('.target-value');
+            counters.forEach(counter => {
+                const target = parseInt(counter.getAttribute('data-target'));
+                if (target) {
+                    let current = 0;
+                    const increment = target / 50;
+                    const timer = setInterval(() => {
+                        current += increment;
+                        if (current >= target) {
+                            counter.textContent = target + '+';
+                            clearInterval(timer);
+                        } else {
+                            counter.textContent = Math.floor(current) + '+';
+                        }
+                    }, 30);
+                }
+            });
+        }
+
+        // Trigger counter animation when section is visible
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    animateCounters();
+                    observer.disconnect();
+                }
+            });
+        });
+        const targetsSection = document.querySelector('.targets-grid');
+        if (targetsSection) observer.observe(targetsSection);
     </script>
 </body>
 
