@@ -4,21 +4,28 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Fawry Delivery App - تطبيق المندوب</title>
-    <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700;800&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+    <meta name="description" content="تطبيق المندوب - نظام توصيل احترافي مع تتبع وملاحة ذكية">
+    <title>🚚 تطبيق المندوب | Delivery App</title>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Tajawal:wght@300;400;500;700;800&family=Roboto+Mono:wght@400;500&display=swap"
+        rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
     <style>
         :root {
-            --primary: #00B894;
-            --secondary: #0984E3;
-            --success: #2ECC71;
-            --warning: #F39C12;
-            --error: #E74C3C;
-            --dark: #0D1117;
-            --surface: #161B22;
-            --text: #333;
-            --text-light: #6c757d;
-            --gradient: linear-gradient(135deg, #00B894 0%, #0984E3 100%);
+            --primary: #0984E3;
+            --primary-light: #74B9FF;
+            --secondary: #00B894;
+            --secondary-light: #55EFC4;
+            --warning: #FDCB6E;
+            --error: #D63031;
+            --bg-dark: #0D0D0D;
+            --surface-dark: #1A1A2E;
+            --text-light: #FFFFFF;
+            --text-muted: rgba(255, 255, 255, 0.7);
+            --gradient-1: linear-gradient(135deg, #0984E3 0%, #74B9FF 100%);
+            --gradient-2: linear-gradient(135deg, #00B894 0%, #55EFC4 100%);
+            --gradient-3: linear-gradient(135deg, #0984E3 0%, #00B894 100%);
+            --shadow-glow: 0 0 60px rgba(9, 132, 227, 0.4);
         }
 
         * {
@@ -28,110 +35,174 @@
         }
 
         body {
-            font-family: 'Cairo', sans-serif;
-            background: #f8f9fa;
-            color: var(--text);
-            line-height: 1.8;
+            font-family: 'Tajawal', sans-serif;
+            background: var(--bg-dark);
+            color: var(--text-light);
             overflow-x: hidden;
+            line-height: 1.6;
         }
 
-        /* Navigation */
-        .nav-bar {
+        /* Animated Background */
+        .animated-bg {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: -1;
+            background: var(--bg-dark);
+        }
+
+        .animated-bg::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background:
+                radial-gradient(circle at 20% 80%, rgba(9, 132, 227, 0.15) 0%, transparent 50%),
+                radial-gradient(circle at 80% 20%, rgba(0, 184, 148, 0.15) 0%, transparent 50%),
+                radial-gradient(circle at 40% 40%, rgba(116, 185, 255, 0.1) 0%, transparent 40%);
+            animation: bgMove 20s ease-in-out infinite;
+        }
+
+        @keyframes bgMove {
+
+            0%,
+            100% {
+                transform: translate(0, 0) rotate(0deg);
+            }
+
+            25% {
+                transform: translate(-5%, 5%) rotate(3deg);
+            }
+
+            50% {
+                transform: translate(5%, -5%) rotate(-3deg);
+            }
+
+            75% {
+                transform: translate(-3%, -3%) rotate(1deg);
+            }
+        }
+
+        /* Header */
+        header {
             position: fixed;
             top: 0;
             left: 0;
             right: 0;
-            z-index: 1000;
-            padding: 15px 40px;
+            padding: 20px 50px;
             display: flex;
             justify-content: space-between;
             align-items: center;
-            background: rgba(13, 17, 23, 0.95);
+            z-index: 1000;
             backdrop-filter: blur(20px);
+            background: rgba(13, 13, 13, 0.8);
             border-bottom: 1px solid rgba(255, 255, 255, 0.1);
-            transition: all 0.3s ease;
         }
 
-        .nav-logo {
+        .logo {
             display: flex;
             align-items: center;
-            gap: 10px;
-            color: white;
+            gap: 12px;
+            font-size: 24px;
+            font-weight: 800;
             text-decoration: none;
-            font-size: 1.4rem;
-            font-weight: 700;
+            color: var(--text-light);
         }
 
-        .nav-logo i {
-            color: var(--primary);
-            font-size: 1.6rem;
+        .logo-icon {
+            width: 45px;
+            height: 45px;
+            background: var(--gradient-1);
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 22px;
         }
 
         .nav-links {
             display: flex;
-            gap: 25px;
+            gap: 35px;
             list-style: none;
-            align-items: center;
         }
 
         .nav-links a {
-            color: rgba(255, 255, 255, 0.7);
+            color: var(--text-muted);
             text-decoration: none;
-            font-weight: 500;
+            font-size: 15px;
             transition: all 0.3s ease;
-            font-size: 0.95rem;
+            position: relative;
         }
 
         .nav-links a:hover {
-            color: var(--primary);
+            color: var(--text-light);
         }
 
-        .nav-links .main-link {
-            background: var(--gradient);
+        .nav-links a::after {
+            content: '';
+            position: absolute;
+            bottom: -5px;
+            left: 0;
+            width: 0;
+            height: 2px;
+            background: var(--gradient-1);
+            transition: width 0.3s ease;
+        }
+
+        .nav-links a:hover::after {
+            width: 100%;
+        }
+
+        .cta-btn {
+            background: var(--gradient-1);
             color: white;
-            padding: 10px 25px;
-            border-radius: 25px;
+            padding: 12px 28px;
+            border: none;
+            border-radius: 30px;
+            font-size: 15px;
             font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-family: 'Tajawal', sans-serif;
+            text-decoration: none;
         }
 
-        .nav-links .main-link:hover {
+        .cta-btn:hover {
             transform: translateY(-2px);
-            box-shadow: 0 5px 20px rgba(0, 184, 148, 0.3);
+            box-shadow: 0 10px 30px rgba(9, 132, 227, 0.4);
         }
 
         /* Hero Section */
         .hero {
-            background: var(--gradient);
             min-height: 100vh;
             display: flex;
             align-items: center;
             justify-content: center;
+            padding: 120px 50px 80px;
             position: relative;
-            overflow: hidden;
-        }
-
-        .hero::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: 0;
-            right: 0;
-            bottom: 0;
-            background: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><circle cx="50" cy="50" r="40" fill="none" stroke="rgba(255,255,255,0.1)" stroke-width="0.5"/></svg>') repeat;
-            opacity: 0.5;
         }
 
         .hero-content {
-            text-align: center;
-            z-index: 1;
-            padding: 20px;
+            max-width: 1400px;
+            width: 100%;
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 80px;
+            align-items: center;
+        }
+
+        .hero-text {
             animation: fadeInUp 1s ease;
         }
 
         @keyframes fadeInUp {
             from {
                 opacity: 0;
-                transform: translateY(30px);
+                transform: translateY(40px);
             }
 
             to {
@@ -140,18 +211,20 @@
             }
         }
 
-        .hero-icon {
-            width: 150px;
-            height: 150px;
-            background: rgba(255, 255, 255, 0.2);
-            border-radius: 40px;
-            display: flex;
+        .hero-badge {
+            display: inline-flex;
             align-items: center;
-            justify-content: center;
-            margin: 0 auto 30px;
-            font-size: 70px;
-            color: white;
-            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.2);
+            gap: 10px;
+            background: rgba(9, 132, 227, 0.2);
+            padding: 8px 20px;
+            border-radius: 30px;
+            font-size: 14px;
+            color: var(--primary-light);
+            margin-bottom: 25px;
+            border: 1px solid rgba(9, 132, 227, 0.3);
+        }
+
+        .hero-badge i {
             animation: pulse 2s infinite;
         }
 
@@ -160,749 +233,995 @@
             0%,
             100% {
                 transform: scale(1);
-                box-shadow: 0 20px 60px rgba(0, 0, 0, 0.2);
             }
 
             50% {
-                transform: scale(1.05);
-                box-shadow: 0 25px 80px rgba(0, 0, 0, 0.3);
+                transform: scale(1.2);
             }
         }
 
         .hero h1 {
-            font-size: 3.5rem;
-            color: white;
+            font-size: 56px;
             font-weight: 800;
-            margin-bottom: 15px;
-            text-shadow: 2px 2px 10px rgba(0, 0, 0, 0.2);
+            line-height: 1.2;
+            margin-bottom: 25px;
+            background: linear-gradient(135deg, #FFFFFF 0%, #74B9FF 50%, #55EFC4 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
         }
 
         .hero p {
-            font-size: 1.4rem;
-            color: rgba(255, 255, 255, 0.9);
-            max-width: 600px;
-            margin: 0 auto 40px;
+            font-size: 20px;
+            color: var(--text-muted);
+            margin-bottom: 40px;
+            line-height: 1.8;
         }
 
-        .hero-stats {
+        .hero-buttons {
+            display: flex;
+            gap: 20px;
+        }
+
+        .btn-primary {
+            background: var(--gradient-1);
+            color: white;
+            padding: 16px 40px;
+            border: none;
+            border-radius: 30px;
+            font-size: 16px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-family: 'Tajawal', sans-serif;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            text-decoration: none;
+        }
+
+        .btn-primary:hover {
+            transform: translateY(-3px);
+            box-shadow: var(--shadow-glow);
+        }
+
+        .btn-secondary {
+            background: transparent;
+            color: white;
+            padding: 16px 40px;
+            border: 2px solid rgba(255, 255, 255, 0.3);
+            border-radius: 30px;
+            font-size: 16px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-family: 'Tajawal', sans-serif;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            text-decoration: none;
+        }
+
+        .btn-secondary:hover {
+            border-color: var(--primary-light);
+            background: rgba(9, 132, 227, 0.1);
+        }
+
+        .hero-visual {
             display: flex;
             justify-content: center;
-            gap: 40px;
-            flex-wrap: wrap;
+            align-items: center;
+            perspective: 1000px;
         }
 
-        .stat-box {
-            background: rgba(255, 255, 255, 0.15);
-            backdrop-filter: blur(10px);
-            padding: 25px 40px;
+        .phone-mockup {
+            width: 320px;
+            height: 650px;
+            background: var(--surface-dark);
+            border-radius: 50px;
+            padding: 12px;
+            position: relative;
+            box-shadow:
+                0 50px 100px rgba(0, 0, 0, 0.5),
+                0 0 80px rgba(9, 132, 227, 0.3),
+                inset 0 0 0 3px rgba(255, 255, 255, 0.1);
+            animation: float 6s ease-in-out infinite;
+        }
+
+        @keyframes float {
+
+            0%,
+            100% {
+                transform: translateY(0) rotateY(-5deg);
+            }
+
+            50% {
+                transform: translateY(-20px) rotateY(5deg);
+            }
+        }
+
+        .phone-screen {
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(180deg, #1A1A2E 0%, #2D2D44 100%);
+            border-radius: 40px;
+            overflow: hidden;
+            position: relative;
+        }
+
+        .phone-notch {
+            position: absolute;
+            top: 10px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 120px;
+            height: 28px;
+            background: #0D0D0D;
             border-radius: 20px;
-            text-align: center;
-            border: 1px solid rgba(255, 255, 255, 0.2);
-            transition: transform 0.3s ease;
+            z-index: 10;
         }
 
-        .stat-box:hover {
-            transform: translateY(-5px);
+        .screen-content {
+            padding: 50px 20px 20px;
+            height: 100%;
         }
 
-        .stat-box h3 {
-            font-size: 2.5rem;
-            color: white;
-            font-weight: 800;
+        .screen-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 25px;
         }
 
-        .stat-box p {
+        .screen-header h3 {
+            font-size: 22px;
+            font-weight: 700;
+        }
+
+        .stat-cards {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 12px;
+            margin-bottom: 20px;
+        }
+
+        .stat-card {
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 16px;
+            padding: 15px;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .stat-card.highlight {
+            background: var(--gradient-1);
+            border: none;
+        }
+
+        .stat-card i {
+            font-size: 20px;
+            margin-bottom: 10px;
+            display: block;
+        }
+
+        .stat-card .value {
+            font-family: 'Roboto Mono', monospace;
+            font-size: 24px;
+            font-weight: 700;
+        }
+
+        .stat-card .label {
+            font-size: 11px;
+            color: var(--text-muted);
+        }
+
+        .stat-card.highlight .label {
             color: rgba(255, 255, 255, 0.8);
-            font-size: 1rem;
-            margin: 0;
         }
 
-        /* Sections */
-        section {
-            padding: 80px 20px;
+        .mini-chart {
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 16px;
+            padding: 15px;
+            height: 120px;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            display: flex;
+            align-items: flex-end;
+            gap: 8px;
         }
 
-        .container {
+        .chart-bar {
+            flex: 1;
+            background: var(--gradient-2);
+            border-radius: 4px;
+            animation: growUp 1s ease forwards;
+            transform-origin: bottom;
+        }
+
+        @keyframes growUp {
+            from {
+                transform: scaleY(0);
+            }
+
+            to {
+                transform: scaleY(1);
+            }
+        }
+
+        /* Stats Section */
+        .stats-section {
+            padding: 80px 50px;
+            background: rgba(26, 26, 46, 0.5);
+        }
+
+        .stats-grid {
             max-width: 1200px;
             margin: 0 auto;
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 30px;
         }
 
-        .section-title {
+        .stat-item {
             text-align: center;
-            margin-bottom: 60px;
+            padding: 40px 20px;
+            background: rgba(255, 255, 255, 0.03);
+            border-radius: 20px;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            transition: all 0.3s ease;
         }
 
-        .section-title h2 {
-            font-size: 2.5rem;
-            color: var(--dark);
+        .stat-item:hover {
+            transform: translateY(-5px);
+            border-color: var(--primary);
+            box-shadow: 0 20px 40px rgba(9, 132, 227, 0.2);
+        }
+
+        .stat-item .number {
+            font-family: 'Roboto Mono', monospace;
+            font-size: 48px;
+            font-weight: 700;
+            background: var(--gradient-1);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            display: block;
+            margin-bottom: 10px;
+        }
+
+        .stat-item .label {
+            color: var(--text-muted);
+            font-size: 16px;
+        }
+
+        /* Screens Section */
+        .screens-section {
+            padding: 100px 50px;
+        }
+
+        .section-header {
+            text-align: center;
+            max-width: 800px;
+            margin: 0 auto 60px;
+        }
+
+        .section-header h2 {
+            font-size: 42px;
             font-weight: 800;
-            margin-bottom: 15px;
+            margin-bottom: 20px;
+            background: linear-gradient(135deg, #FFFFFF 0%, #74B9FF 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
         }
 
-        .section-title p {
-            color: var(--text-light);
-            font-size: 1.2rem;
-            max-width: 600px;
+        .section-header p {
+            color: var(--text-muted);
+            font-size: 18px;
+        }
+
+        .screens-grid {
+            max-width: 1400px;
             margin: 0 auto;
-        }
-
-        /* Features */
-        .features {
-            background: white;
-        }
-
-        .features-grid {
             display: grid;
             grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
             gap: 30px;
         }
 
-        .feature-card {
-            background: linear-gradient(145deg, #f8f9fa, #ffffff);
-            padding: 35px;
-            border-radius: 20px;
-            box-shadow: 0 10px 40px rgba(0, 0, 0, 0.08);
+        .screen-card {
+            background: var(--surface-dark);
+            border-radius: 24px;
+            padding: 30px;
+            border: 1px solid rgba(255, 255, 255, 0.1);
             transition: all 0.4s ease;
-            border: 1px solid #eee;
+            position: relative;
+            overflow: hidden;
         }
 
-        .feature-card:hover {
+        .screen-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 4px;
+            background: var(--gradient-1);
+            transform: scaleX(0);
+            transition: transform 0.4s ease;
+        }
+
+        .screen-card:hover::before {
+            transform: scaleX(1);
+        }
+
+        .screen-card:hover {
             transform: translateY(-10px);
-            box-shadow: 0 20px 60px rgba(0, 184, 148, 0.15);
+            box-shadow: 0 30px 60px rgba(0, 0, 0, 0.3);
         }
 
-        .feature-icon {
-            width: 70px;
-            height: 70px;
-            background: var(--gradient);
-            border-radius: 18px;
+        .screen-card-icon {
+            width: 60px;
+            height: 60px;
+            border-radius: 16px;
             display: flex;
             align-items: center;
             justify-content: center;
-            font-size: 30px;
-            color: white;
+            font-size: 24px;
             margin-bottom: 20px;
         }
 
-        .feature-card h3 {
-            font-size: 1.4rem;
-            color: var(--dark);
+        .screen-card-icon.blue {
+            background: rgba(9, 132, 227, 0.2);
+            color: var(--primary-light);
+        }
+
+        .screen-card-icon.green {
+            background: rgba(0, 184, 148, 0.2);
+            color: var(--secondary-light);
+        }
+
+        .screen-card-icon.yellow {
+            background: rgba(253, 203, 110, 0.2);
+            color: var(--warning);
+        }
+
+        .screen-card-icon.red {
+            background: rgba(214, 48, 49, 0.2);
+            color: #FF7675;
+        }
+
+        .screen-card h3 {
+            font-size: 22px;
+            font-weight: 700;
             margin-bottom: 12px;
-            font-weight: 700;
         }
 
-        .feature-card p {
-            color: var(--text-light);
-            line-height: 1.8;
+        .screen-card p {
+            color: var(--text-muted);
+            font-size: 15px;
+            margin-bottom: 20px;
         }
 
-        /* Screens Section */
-        .screens {
-            background: linear-gradient(180deg, #f8f9fa 0%, #e9ecef 100%);
-        }
-
-        .modules-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-            gap: 25px;
-        }
-
-        .module-card {
-            background: white;
-            border-radius: 20px;
-            overflow: hidden;
-            box-shadow: 0 10px 40px rgba(0, 0, 0, 0.08);
-            transition: all 0.3s ease;
-        }
-
-        .module-card:hover {
-            transform: scale(1.02);
-            box-shadow: 0 15px 50px rgba(0, 0, 0, 0.12);
-        }
-
-        .module-header {
-            padding: 25px;
-            color: white;
+        .screen-card-features {
             display: flex;
-            align-items: center;
-            gap: 15px;
-        }
-
-        .module-header.auth {
-            background: var(--gradient);
-        }
-
-        .module-header.orders {
-            background: linear-gradient(135deg, #0984E3, #6c5ce7);
-        }
-
-        .module-header.earnings {
-            background: linear-gradient(135deg, #2ECC71, #00B894);
-        }
-
-        .module-header.communication {
-            background: linear-gradient(135deg, #F39C12, #E74C3C);
-        }
-
-        .module-header.settings {
-            background: linear-gradient(135deg, #6c757d, #495057);
-        }
-
-        .module-header i {
-            font-size: 30px;
-        }
-
-        .module-header h3 {
-            font-size: 1.3rem;
-            font-weight: 700;
-        }
-
-        .screen-list {
-            padding: 20px;
-        }
-
-        .screen-item {
-            display: flex;
-            align-items: center;
-            padding: 12px;
-            border-radius: 10px;
-            margin-bottom: 8px;
-            background: #f8f9fa;
-            transition: all 0.2s ease;
-        }
-
-        .screen-item:hover {
-            background: #e9ecef;
-        }
-
-        .screen-number {
-            width: 35px;
-            height: 35px;
-            background: var(--gradient);
-            color: white;
-            border-radius: 10px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-weight: 700;
-            margin-left: 15px;
-            font-size: 0.9rem;
-        }
-
-        .screen-info h4 {
-            font-size: 1rem;
-            color: var(--dark);
-            margin-bottom: 2px;
-        }
-
-        .screen-info p {
-            font-size: 0.85rem;
-            color: var(--text-light);
-            margin: 0;
-        }
-
-        /* Tech Stack */
-        .tech-stack {
-            background: var(--dark);
-            color: white;
-        }
-
-        .tech-stack .section-title h2 {
-            color: white;
-        }
-
-        .tech-grid {
-            display: flex;
-            justify-content: center;
             flex-wrap: wrap;
-            gap: 30px;
+            gap: 8px;
         }
 
-        .tech-item {
-            background: var(--surface);
-            padding: 30px 50px;
+        .feature-tag {
+            background: rgba(255, 255, 255, 0.05);
+            padding: 6px 14px;
             border-radius: 20px;
-            text-align: center;
+            font-size: 12px;
+            color: var(--text-muted);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        /* Features Section */
+        .features-section {
+            padding: 100px 50px;
+            background: rgba(26, 26, 46, 0.5);
+        }
+
+        .features-grid {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 40px;
+        }
+
+        .feature-item {
+            display: flex;
+            gap: 25px;
+            padding: 30px;
+            background: rgba(255, 255, 255, 0.03);
+            border-radius: 20px;
             border: 1px solid rgba(255, 255, 255, 0.1);
             transition: all 0.3s ease;
         }
 
+        .feature-item:hover {
+            border-color: var(--primary);
+            background: rgba(9, 132, 227, 0.05);
+        }
+
+        .feature-icon {
+            width: 60px;
+            height: 60px;
+            min-width: 60px;
+            background: var(--gradient-1);
+            border-radius: 16px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 24px;
+        }
+
+        .feature-content h4 {
+            font-size: 20px;
+            font-weight: 700;
+            margin-bottom: 10px;
+        }
+
+        .feature-content p {
+            color: var(--text-muted);
+            font-size: 15px;
+        }
+
+        /* Tech Section */
+        .tech-section {
+            padding: 100px 50px;
+        }
+
+        .tech-grid {
+            max-width: 1000px;
+            margin: 0 auto;
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 20px;
+        }
+
+        .tech-item {
+            background: var(--surface-dark);
+            padding: 20px 35px;
+            border-radius: 16px;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            transition: all 0.3s ease;
+        }
+
         .tech-item:hover {
-            transform: translateY(-5px);
-            background: rgba(255, 255, 255, 0.1);
+            border-color: var(--secondary);
+            transform: translateY(-3px);
         }
 
         .tech-item i {
-            font-size: 40px;
-            margin-bottom: 15px;
-            background: var(--gradient);
+            font-size: 24px;
+            color: var(--secondary);
+        }
+
+        .tech-item span {
+            font-weight: 600;
+        }
+
+        /* CTA Section */
+        .cta-section {
+            padding: 120px 50px;
+            text-align: center;
+            position: relative;
+        }
+
+        .cta-section::before {
+            content: '';
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            width: 600px;
+            height: 600px;
+            background: radial-gradient(circle, rgba(9, 132, 227, 0.2) 0%, transparent 70%);
+            z-index: -1;
+        }
+
+        .cta-section h2 {
+            font-size: 48px;
+            font-weight: 800;
+            margin-bottom: 25px;
+            background: linear-gradient(135deg, #FFFFFF 0%, #55EFC4 100%);
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
+            background-clip: text;
         }
 
-        .tech-item h4 {
-            font-size: 1.1rem;
-            margin-bottom: 5px;
-        }
-
-        .tech-item p {
-            color: rgba(255, 255, 255, 0.6);
-            font-size: 0.9rem;
-        }
-
-        /* CTA */
-        .cta {
-            background: var(--gradient);
-            text-align: center;
-            padding: 100px 20px;
-        }
-
-        .cta h2 {
-            font-size: 2.5rem;
-            color: white;
-            margin-bottom: 20px;
-            font-weight: 800;
-        }
-
-        .cta p {
-            color: rgba(255, 255, 255, 0.9);
-            font-size: 1.2rem;
-            max-width: 500px;
-            margin: 0 auto 40px;
+        .cta-section p {
+            color: var(--text-muted);
+            font-size: 20px;
+            margin-bottom: 40px;
+            max-width: 600px;
+            margin-left: auto;
+            margin-right: auto;
         }
 
         .cta-buttons {
             display: flex;
             justify-content: center;
             gap: 20px;
-            flex-wrap: wrap;
-        }
-
-        .btn {
-            padding: 18px 45px;
-            border-radius: 50px;
-            font-size: 1.1rem;
-            font-weight: 700;
-            text-decoration: none;
-            transition: all 0.3s ease;
-            display: inline-flex;
-            align-items: center;
-            gap: 10px;
-            font-family: 'Cairo', sans-serif;
-            cursor: pointer;
-            border: none;
-        }
-
-        .btn-white {
-            background: white;
-            color: var(--primary);
-        }
-
-        .btn-white:hover {
-            transform: scale(1.05);
-            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
-        }
-
-        .btn-outline {
-            background: transparent;
-            color: white;
-            border: 2px solid rgba(255, 255, 255, 0.5);
-        }
-
-        .btn-outline:hover {
-            background: rgba(255, 255, 255, 0.1);
-            border-color: white;
         }
 
         /* Footer */
         footer {
-            background: var(--dark);
-            color: white;
-            padding: 40px 20px;
-            text-align: center;
-        }
-
-        footer p {
-            color: rgba(255, 255, 255, 0.6);
-        }
-
-        footer .copyright {
-            margin-top: 20px;
-            padding-top: 20px;
+            padding: 60px 50px;
+            background: rgba(26, 26, 46, 0.8);
             border-top: 1px solid rgba(255, 255, 255, 0.1);
         }
 
+        .footer-content {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .footer-links {
+            display: flex;
+            gap: 30px;
+        }
+
+        .footer-links a {
+            color: var(--text-muted);
+            text-decoration: none;
+            transition: color 0.3s ease;
+        }
+
+        .footer-links a:hover {
+            color: var(--text-light);
+        }
+
+        .social-links {
+            display: flex;
+            gap: 15px;
+        }
+
+        .social-links a {
+            width: 45px;
+            height: 45px;
+            border-radius: 50%;
+            background: rgba(255, 255, 255, 0.1);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--text-light);
+            text-decoration: none;
+            transition: all 0.3s ease;
+        }
+
+        .social-links a:hover {
+            background: var(--gradient-1);
+            transform: translateY(-3px);
+        }
+
         /* Responsive */
-        @media (max-width: 768px) {
-            .hero h1 {
-                font-size: 2.5rem;
+        @media (max-width: 1024px) {
+            .hero-content {
+                grid-template-columns: 1fr;
+                text-align: center;
             }
 
-            .hero p {
-                font-size: 1.1rem;
+            .hero-buttons {
+                justify-content: center;
             }
 
-            .stat-box {
-                padding: 20px 30px;
+            .hero-visual {
+                order: -1;
             }
 
-            .stat-box h3 {
-                font-size: 2rem;
+            .phone-mockup {
+                width: 280px;
+                height: 570px;
             }
 
-            .section-title h2 {
-                font-size: 2rem;
+            .stats-grid {
+                grid-template-columns: repeat(2, 1fr);
             }
 
             .features-grid {
                 grid-template-columns: 1fr;
             }
+        }
 
-            .modules-grid {
+        @media (max-width: 768px) {
+            header {
+                padding: 15px 20px;
+            }
+
+            .nav-links {
+                display: none;
+            }
+
+            .hero {
+                padding: 100px 20px 60px;
+            }
+
+            .hero h1 {
+                font-size: 36px;
+            }
+
+            .hero p {
+                font-size: 16px;
+            }
+
+            .hero-buttons {
+                flex-direction: column;
+            }
+
+            .stats-grid {
                 grid-template-columns: 1fr;
+            }
+
+            section {
+                padding: 60px 20px;
+            }
+
+            .section-header h2 {
+                font-size: 30px;
+            }
+
+            .footer-content {
+                flex-direction: column;
+                gap: 30px;
+                text-align: center;
+            }
+
+            .footer-links {
+                flex-wrap: wrap;
+                justify-content: center;
             }
         }
 
-        /* Animations */
-        .fade-in {
-            opacity: 0;
-            transform: translateY(30px);
-            transition: all 0.6s ease;
+        /* Floating Elements Animation */
+        .floating-elements {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: -1;
+            overflow: hidden;
         }
 
-        .fade-in.visible {
-            opacity: 1;
-            transform: translateY(0);
+        .floating-element {
+            position: absolute;
+            width: 20px;
+            height: 20px;
+            background: rgba(9, 132, 227, 0.1);
+            border-radius: 50%;
+            animation: floatUp 15s infinite linear;
+        }
+
+        @keyframes floatUp {
+            0% {
+                transform: translateY(100vh) rotate(0deg);
+                opacity: 0;
+            }
+
+            10% {
+                opacity: 0.5;
+            }
+
+            90% {
+                opacity: 0.5;
+            }
+
+            100% {
+                transform: translateY(-100vh) rotate(720deg);
+                opacity: 0;
+            }
         }
     </style>
 </head>
 
 <body>
-    <!-- Navigation Bar -->
-    <nav class="nav-bar">
-        <a href="MARKETING_LANDING.html" class="nav-logo">
-            <i class="fas fa-shipping-fast"></i>
-            فوري دليفري
-        </a>
-        <ul class="nav-links">
-            <li><a href="CUSTOMER_APP_LANDING.html">تطبيق العميل</a></li>
-            <li><a href="MERCHANT_APP_LANDING_PAGE.html">تطبيق التاجر</a></li>
-            <li><a href="DELIVERY_APP_LANDING.html">تطبيق المندوب</a></li>
-            <li><a href="ADMIN_LANDING_PAGE.html">لوحة التحكم</a></li>
-            <li><a href="MARKETING_LANDING.html" class="main-link">الشراكات</a></li>
-        </ul>
-    </nav>
+    <div class="animated-bg"></div>
 
-    <!-- Hero Section -->
-    <section class="hero" style="padding-top: 100px;">
+    <div class="floating-elements">
+        <div class="floating-element" style="left: 10%; animation-delay: 0s;"></div>
+        <div class="floating-element" style="left: 20%; animation-delay: 2s; width: 15px; height: 15px;"></div>
+        <div class="floating-element" style="left: 35%; animation-delay: 4s;"></div>
+        <div class="floating-element" style="left: 50%; animation-delay: 6s; width: 25px; height: 25px;"></div>
+        <div class="floating-element" style="left: 70%; animation-delay: 1s;"></div>
+        <div class="floating-element" style="left: 85%; animation-delay: 3s; width: 18px; height: 18px;"></div>
+        <div class="floating-element" style="left: 95%; animation-delay: 5s;"></div>
+    </div>
+
+    <header>
+        <a href="index.html" class="logo">
+            <div class="logo-icon">🚚</div>
+            <span>تطبيق المندوب</span>
+        </a>
+        <nav>
+            <ul class="nav-links">
+                <li><a href="index.html">الرئيسية</a></li>
+                <li><a href="CUSTOMER_APP_LANDING.html">العميل</a></li>
+                <li><a href="MERCHANT_APP_LANDING_PAGE.html">التاجر</a></li>
+                <li><a href="ADMIN_LANDING_PAGE.html">الإدارة</a></li>
+                <li><a href="#screens">الشاشات</a></li>
+                <li><a href="#features">المميزات</a></li>
+            </ul>
+        </nav>
+        <a href="#cta" class="cta-btn">ابدأ الآن</a>
+    </header>
+
+    <section class="hero">
         <div class="hero-content">
-            <div class="hero-icon">
-                <i class="fas fa-truck-fast"></i>
+            <div class="hero-text">
+                <div class="hero-badge">
+                    <i class="fas fa-rocket"></i>
+                    <span>تطبيق المندوب الأكثر تقدماً</span>
+                </div>
+                <h1>توصيل أسرع وأرباح أكثر مع تتبع ذكي</h1>
+                <p>تطبيق احترافي للمناديب مع ملاحة ذكية، تتبع لحظي، إثبات تسليم موثق، وإدارة كاملة للأرباح. صُمم لرفع
+                    الإنتاجية وتحسين جودة التوصيل.</p>
+                <div class="hero-buttons">
+                    <a href="#" class="btn-primary">
+                        <i class="fab fa-google-play"></i>
+                        تحميل التطبيق
+                    </a>
+                    <a href="#screens" class="btn-secondary">
+                        <i class="fas fa-mobile-screen"></i>
+                        استعرض الشاشات
+                    </a>
+                </div>
             </div>
-            <h1>🚚 Fawry Delivery App</h1>
-            <p>تطبيق احترافي للمناديب - إدارة الطلبات والتوصيل بكفاءة عالية</p>
-            <div class="hero-stats">
-                <div class="stat-box">
-                    <h3>18</h3>
-                    <p>شاشة متكاملة</p>
+            <div class="hero-visual">
+                <div class="phone-mockup">
+                    <div class="phone-screen">
+                        <div class="phone-notch"></div>
+                        <div class="screen-content">
+                            <div class="screen-header">
+                                <h3>طلباتي</h3>
+                                <i class="fas fa-bell"></i>
+                            </div>
+                            <div class="stat-cards">
+                                <div class="stat-card highlight">
+                                    <i class="fas fa-box"></i>
+                                    <div class="value">12</div>
+                                    <div class="label">طلب اليوم</div>
+                                </div>
+                                <div class="stat-card">
+                                    <i class="fas fa-coins"></i>
+                                    <div class="value">485</div>
+                                    <div class="label">ر.س اليوم</div>
+                                </div>
+                                <div class="stat-card">
+                                    <i class="fas fa-route"></i>
+                                    <div class="value">32</div>
+                                    <div class="label">كم مقطوعة</div>
+                                </div>
+                                <div class="stat-card">
+                                    <i class="fas fa-star"></i>
+                                    <div class="value">4.9</div>
+                                    <div class="label">التقييم</div>
+                                </div>
+                            </div>
+                            <div class="mini-chart">
+                                <div class="chart-bar" style="height: 40%;"></div>
+                                <div class="chart-bar" style="height: 65%;"></div>
+                                <div class="chart-bar" style="height: 45%;"></div>
+                                <div class="chart-bar" style="height: 80%;"></div>
+                                <div class="chart-bar" style="height: 55%;"></div>
+                                <div class="chart-bar" style="height: 90%;"></div>
+                                <div class="chart-bar" style="height: 70%;"></div>
+                            </div>
+                        </div>
+                    </div>
                 </div>
-                <div class="stat-box">
-                    <h3>21+</h3>
-                    <p>API Endpoint</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Stats Section -->
+    <section class="stats-section">
+        <div class="stats-grid">
+            <div class="stat-item">
+                <span class="number">18</span>
+                <span class="label">شاشة متكاملة</span>
+            </div>
+            <div class="stat-item">
+                <span class="number">21+</span>
+                <span class="label">API Endpoint</span>
+            </div>
+            <div class="stat-item">
+                <span class="number">5</span>
+                <span class="label">وحدات رئيسية</span>
+            </div>
+            <div class="stat-item">
+                <span class="number">100%</span>
+                <span class="label">دعم عربي</span>
+            </div>
+        </div>
+    </section>
+
+    <!-- Screens Section -->
+    <section class="screens-section" id="screens">
+        <div class="section-header">
+            <h2>شاشات التطبيق</h2>
+            <p>18 شاشة متكاملة تغطي جميع احتياجات المندوب من تسجيل الدخول حتى إدارة الأرباح</p>
+        </div>
+        <div class="screens-grid">
+            <div class="screen-card">
+                <div class="screen-card-icon blue"><i class="fas fa-user-lock"></i></div>
+                <h3>المصادقة والملف الشخصي</h3>
+                <p>تسجيل دخول آمن وإدارة كاملة للملف الشخصي مع التحقق</p>
+                <div class="screen-card-features">
+                    <span class="feature-tag">Splash Screen</span>
+                    <span class="feature-tag">Login</span>
+                    <span class="feature-tag">Profile</span>
                 </div>
-                <div class="stat-box">
-                    <h3>5</h3>
-                    <p>وحدات رئيسية</p>
+            </div>
+            <div class="screen-card">
+                <div class="screen-card-icon green"><i class="fas fa-boxes-stacked"></i></div>
+                <h3>إدارة الطلبات</h3>
+                <p>استلام وتنفيذ الطلبات مع تتبع كل خطوة من القبول حتى التسليم</p>
+                <div class="screen-card-features">
+                    <span class="feature-tag">Available Orders</span>
+                    <span class="feature-tag">My Active</span>
+                    <span class="feature-tag">Order Details</span>
+                    <span class="feature-tag">History</span>
+                </div>
+            </div>
+            <div class="screen-card">
+                <div class="screen-card-icon blue"><i class="fas fa-map-location-dot"></i></div>
+                <h3>الملاحة والتتبع</h3>
+                <p>خرائط ذكية مع ملاحة للمتجر والعميل وتتبع لحظي للموقع</p>
+                <div class="screen-card-features">
+                    <span class="feature-tag">Navigation Map</span>
+                    <span class="feature-tag">Route Optimization</span>
+                    <span class="feature-tag">ETA</span>
+                </div>
+            </div>
+            <div class="screen-card">
+                <div class="screen-card-icon yellow"><i class="fas fa-camera"></i></div>
+                <h3>إثبات التسليم</h3>
+                <p>توثيق التسليم بالصورة أو التوقيع أو رمز OTP للموثوقية الكاملة</p>
+                <div class="screen-card-features">
+                    <span class="feature-tag">Photo Proof</span>
+                    <span class="feature-tag">Signature</span>
+                    <span class="feature-tag">OTP</span>
+                </div>
+            </div>
+            <div class="screen-card">
+                <div class="screen-card-icon green"><i class="fas fa-wallet"></i></div>
+                <h3>إدارة الأرباح</h3>
+                <p>لوحة تحكم شاملة للأرباح اليومية والأسبوعية مع تقارير مفصلة</p>
+                <div class="screen-card-features">
+                    <span class="feature-tag">Earnings Dashboard</span>
+                    <span class="feature-tag">Daily Report</span>
+                    <span class="feature-tag">Payments</span>
+                </div>
+            </div>
+            <div class="screen-card">
+                <div class="screen-card-icon red"><i class="fas fa-comments"></i></div>
+                <h3>التواصل والدعم</h3>
+                <p>دردشة فورية مع العميل والمتجر وزر SOS للطوارئ</p>
+                <div class="screen-card-features">
+                    <span class="feature-tag">Chat</span>
+                    <span class="feature-tag">Notifications</span>
+                    <span class="feature-tag">SOS</span>
                 </div>
             </div>
         </div>
     </section>
 
     <!-- Features Section -->
-    <section class="features">
-        <div class="container">
-            <div class="section-title">
-                <h2>✨ المميزات الرئيسية</h2>
-                <p>تطبيق متكامل مع جميع الأدوات التي يحتاجها المندوب</p>
-            </div>
-            <div class="features-grid">
-                <div class="feature-card fade-in">
-                    <div class="feature-icon"><i class="fas fa-location-crosshairs"></i></div>
-                    <h3>تتبع الموقع في الوقت الحقيقي</h3>
-                    <p>تتبع موقع المندوب وعرض الموقع للعميل مع حساب المسافة والوقت المتوقع للوصول</p>
+    <section class="features-section" id="features">
+        <div class="section-header">
+            <h2>المميزات الرئيسية</h2>
+            <p>تطبيق مصمم لرفع إنتاجية المندوب وتحسين تجربة التوصيل</p>
+        </div>
+        <div class="features-grid">
+            <div class="feature-item">
+                <div class="feature-icon"><i class="fas fa-location-crosshairs"></i></div>
+                <div class="feature-content">
+                    <h4>تتبع الموقع في الوقت الحقيقي</h4>
+                    <p>تتبع موقع المندوب وعرضه للعميل مع حساب المسافة والوقت المتوقع للوصول</p>
                 </div>
-                <div class="feature-card fade-in">
-                    <div class="feature-icon"><i class="fas fa-route"></i></div>
-                    <h3>التنقل والملاحة</h3>
+            </div>
+            <div class="feature-item">
+                <div class="feature-icon"><i class="fas fa-route"></i></div>
+                <div class="feature-content">
+                    <h4>الملاحة الذكية</h4>
                     <p>تكامل مع خرائط Google للملاحة مع عرض المسار الأمثل للتوصيل</p>
                 </div>
-                <div class="feature-card fade-in">
-                    <div class="feature-icon"><i class="fas fa-wallet"></i></div>
-                    <h3>إدارة الأرباح</h3>
+            </div>
+            <div class="feature-item">
+                <div class="feature-icon"><i class="fas fa-wallet"></i></div>
+                <div class="feature-content">
+                    <h4>إدارة الأرباح</h4>
                     <p>لوحة تحكم شاملة للأرباح اليومية والأسبوعية مع رسوم بيانية تفاعلية</p>
                 </div>
-                <div class="feature-card fade-in">
-                    <div class="feature-icon"><i class="fas fa-comments"></i></div>
-                    <h3>الدردشة الفورية</h3>
+            </div>
+            <div class="feature-item">
+                <div class="feature-icon"><i class="fas fa-comments"></i></div>
+                <div class="feature-content">
+                    <h4>الدردشة الفورية</h4>
                     <p>تواصل مباشر مع العميل أو المتجر مع رسائل سريعة جاهزة</p>
                 </div>
-                <div class="feature-card fade-in">
-                    <div class="feature-icon"><i class="fas fa-bell"></i></div>
-                    <h3>إشعارات ذكية</h3>
-                    <p>إشعارات فورية للطلبات الجديدة والتحديثات مع التكامل مع Supabase</p>
+            </div>
+            <div class="feature-item">
+                <div class="feature-icon"><i class="fas fa-bell"></i></div>
+                <div class="feature-content">
+                    <h4>إشعارات ذكية</h4>
+                    <p>إشعارات فورية للطلبات الجديدة والتحديثات مع صوت تنبيه مميز</p>
                 </div>
-                <div class="feature-card fade-in">
-                    <div class="feature-icon"><i class="fas fa-shield-halved"></i></div>
-                    <h3>نظام SOS للطوارئ</h3>
+            </div>
+            <div class="feature-item">
+                <div class="feature-icon"><i class="fas fa-shield-halved"></i></div>
+                <div class="feature-content">
+                    <h4>نظام SOS للطوارئ</h4>
                     <p>زر طوارئ سريع مع إرسال الموقع تلقائياً للدعم الفني</p>
                 </div>
-                <div class="feature-card fade-in">
-                    <div class="feature-icon"><i class="fas fa-moon"></i></div>
-                    <h3>الوضع الداكن</h3>
+            </div>
+            <div class="feature-item">
+                <div class="feature-icon"><i class="fas fa-moon"></i></div>
+                <div class="feature-content">
+                    <h4>الوضع الليلي</h4>
                     <p>دعم كامل للوضع الداكن مع تصميم الخريطة الليلي للقيادة المريحة</p>
                 </div>
-                <div class="feature-card fade-in">
-                    <div class="feature-icon"><i class="fas fa-language"></i></div>
-                    <h3>دعم RTL الكامل</h3>
-                    <p>تصميم متوافق مع اللغة العربية مع خط Cairo الاحترافي</p>
+            </div>
+            <div class="feature-item">
+                <div class="feature-icon"><i class="fas fa-language"></i></div>
+                <div class="feature-content">
+                    <h4>دعم RTL الكامل</h4>
+                    <p>تصميم متوافق مع اللغة العربية مع خط Tajawal الاحترافي</p>
                 </div>
             </div>
         </div>
     </section>
 
-    <!-- Screens Section -->
-    <section class="screens">
-        <div class="container">
-            <div class="section-title">
-                <h2>📱 الشاشات (18 شاشة)</h2>
-                <p>جميع الشاشات المطلوبة لتجربة مندوب متكاملة</p>
+    <!-- Tech Section -->
+    <section class="tech-section">
+        <div class="section-header">
+            <h2>التقنيات المستخدمة</h2>
+        </div>
+        <div class="tech-grid">
+            <div class="tech-item">
+                <i class="fab fa-flutter"></i>
+                <span>Flutter 3.16+</span>
             </div>
-            <div class="modules-grid">
-                <!-- Auth Module -->
-                <div class="module-card">
-                    <div class="module-header auth">
-                        <i class="fas fa-user-lock"></i>
-                        <h3>وحدة المصادقة (3 شاشات)</h3>
-                    </div>
-                    <div class="screen-list">
-                        <div class="screen-item">
-                            <div class="screen-number">1</div>
-                            <div class="screen-info">
-                                <h4>Splash Screen</h4>
-                                <p>شاشة البداية والتحقق من الجلسة</p>
-                            </div>
-                        </div>
-                        <div class="screen-item">
-                            <div class="screen-number">2</div>
-                            <div class="screen-info">
-                                <h4>Login Screen</h4>
-                                <p>تسجيل الدخول بالإيميل أو الجوال</p>
-                            </div>
-                        </div>
-                        <div class="screen-item">
-                            <div class="screen-number">3</div>
-                            <div class="screen-info">
-                                <h4>Profile Screen</h4>
-                                <p>عرض وتعديل الملف الشخصي</p>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-
-                <!-- Orders Module -->
-                <div class="module-card">
-                    <div class="module-header orders">
-                        <i class="fas fa-boxes-stacked"></i>
-                        <h3>وحدة الطلبات (7 شاشات)</h3>
-                    </div>
-                    <div class="screen-list">
-                        <div class="screen-item">
-                            <div class="screen-number">4</div>
-                            <div class="screen-info">
-                                <h4>Available Orders</h4>
-                                <p>الطلبات المتاحة للقبول</p>
-                            </div>
-                        </div>
-                        <div class="screen-item">
-                            <div class="screen-number">5</div>
-                            <div class="screen-info">
-                                <h4>My Active Orders</h4>
-                                <p>طلباتي النشطة</p>
-                            </div>
-                        </div>
-                        <div class="screen-item">
-                            <div class="screen-number">6</div>
-                            <div class="screen-info">
-                                <h4>Order Details</h4>
-                                <p>تفاصيل الطلب والعميل</p>
-                            </div>
-                        </div>
-                        <div class="screen-item">
-                            <div class="screen-number">7</div>
-                            <div class="screen-info">
-                                <h4>Navigation Map</h4>
-                                <p>خريطة التوصيل والملاحة</p>
-                            </div>
-                        </div>
-                        <div class="screen-item">
-                            <div class="screen-number">8</div>
-                            <div class="screen-info">
-                                <h4>Delivery Confirmation</h4>
-                                <p>تأكيد التسليم بالتوقيع/الصورة</p>
-                            </div>
-                        </div>
-                        <div class="screen-item">
-                            <div class="screen-number">9</div>
-                            <div class="screen-info">
-                                <h4>Order History</h4>
-                                <p>سجل الطلبات المكتملة</p>
-                            </div>
-                        </div>
-                        <div class="screen-item">
-                            <div class="screen-number">10</div>
-                            <div class="screen-info">
-                                <h4>Report Issue</h4>
-                                <p>الإبلاغ عن مشكلة</p>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-
-                <!-- Earnings Module -->
-                <div class="module-card">
-                    <div class="module-header earnings">
-                        <i class="fas fa-coins"></i>
-                        <h3>وحدة الأرباح (3 شاشات)</h3>
-                    </div>
-                    <div class="screen-list">
-                        <div class="screen-item">
-                            <div class="screen-number">11</div>
-                            <div class="screen-info">
-                                <h4>Earnings Dashboard</h4>
-                                <p>لوحة تحكم الأرباح</p>
-                            </div>
-                        </div>
-                        <div class="screen-item">
-                            <div class="screen-number">12</div>
-                            <div class="screen-info">
-                                <h4>Daily Earnings</h4>
-                                <p>تفاصيل أرباح اليوم</p>
-                            </div>
-                        </div>
-                        <div class="screen-item">
-                            <div class="screen-number">13</div>
-                            <div class="screen-info">
-                                <h4>Payments History</h4>
-                                <p>سجل المدفوعات والتحويلات</p>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-
-                <!-- Communication Module -->
-                <div class="module-card">
-                    <div class="module-header communication">
-                        <i class="fas fa-message"></i>
-                        <h3>وحدة التواصل (2 شاشات)</h3>
-                    </div>
-                    <div class="screen-list">
-                        <div class="screen-item">
-                            <div class="screen-number">14</div>
-                            <div class="screen-info">
-                                <h4>Chat Screen</h4>
-                                <p>الدردشة مع العميل</p>
-                            </div>
-                        </div>
-                        <div class="screen-item">
-                            <div class="screen-number">15</div>
-                            <div class="screen-info">
-                                <h4>Notifications</h4>
-                                <p>مركز الإشعارات</p>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-
-                <!-- Settings Module -->
-                <div class="module-card">
-                    <div class="module-header settings">
-                        <i class="fas fa-gear"></i>
-                        <h3>وحدة الإعدادات (3 شاشات)</h3>
-                    </div>
-                    <div class="screen-list">
-                        <div class="screen-item">
-                            <div class="screen-number">16</div>
-                            <div class="screen-info">
-                                <h4>Settings Screen</h4>
-                                <p>الإعدادات العامة</p>
-                            </div>
-                        </div>
-                        <div class="screen-item">
-                            <div class="screen-number">17</div>
-                            <div class="screen-info">
-                                <h4>Online Status</h4>
-                                <p>متصل / غير متصل</p>
-                            </div>
-                        </div>
-                        <div class="screen-item">
-                            <div class="screen-number">18</div>
-                            <div class="screen-info">
-                                <h4>Account Settings</h4>
-                                <p>إعدادات الحساب والبيانات</p>
-                            </div>
-                        </div>
-                    </div>
-                </div>
+            <div class="tech-item">
+                <i class="fas fa-database"></i>
+                <span>Supabase</span>
+            </div>
+            <div class="tech-item">
+                <i class="fas fa-map-marked-alt"></i>
+                <span>Google Maps</span>
+            </div>
+            <div class="tech-item">
+                <i class="fas fa-code-branch"></i>
+                <span>Riverpod 2.0</span>
+            </div>
+            <div class="tech-item">
+                <i class="fas fa-lock"></i>
+                <span>Secure Auth</span>
             </div>
         </div>
     </section>
 
-    <!-- Tech Stack -->
-    <section class="tech-stack">
-        <div class="container">
-            <div class="section-title">
-                <h2>🛠️ التقنيات المستخدمة</h2>
-            </div>
-            <div class="tech-grid">
-                <div class="tech-item">
-                    <i class="fab fa-flutter"></i>
-                    <h4>Flutter 3.16+</h4>
-                    <p>Cross-Platform</p>
-                </div>
-                <div class="tech-item">
-                    <i class="fas fa-database"></i>
-                    <h4>Supabase</h4>
-                    <p>Backend as Service</p>
-                </div>
-                <div class="tech-item">
-                    <i class="fas fa-map-marked-alt"></i>
-                    <h4>Google Maps</h4>
-                    <p>Maps & Navigation</p>
-                </div>
-                <div class="tech-item">
-                    <i class="fas fa-code-branch"></i>
-                    <h4>Riverpod 2.0</h4>
-                    <p>State Management</p>
-                </div>
-                <div class="tech-item">
-                    <i class="fas fa-lock"></i>
-                    <h4>Secure Auth</h4>
-                    <p>JWT & Supabase Auth</p>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <!-- CTA -->
-    <section class="cta">
-        <h2>🚀 ابدأ الآن</h2>
-        <p>تطبيق جاهز للإطلاق مع كود نظيف 100% وبدون أخطاء</p>
+    <!-- CTA Section -->
+    <section class="cta-section" id="cta">
+        <h2>ابدأ رحلتك كمندوب الآن</h2>
+        <p>انضم لفريق فوري دليفري وابدأ في تحقيق أرباح يومية مع تطبيق احترافي</p>
         <div class="cta-buttons">
-            <a href="#" class="btn btn-white">
+            <a href="#" class="btn-primary">
                 <i class="fab fa-android"></i>
                 تحميل للأندرويد
             </a>
-            <a href="#" class="btn btn-outline">
+            <a href="#" class="btn-secondary">
                 <i class="fab fa-apple"></i>
                 تحميل للآيفون
             </a>
@@ -911,47 +1230,24 @@
 
     <!-- Footer -->
     <footer>
-        <p><i class="fas fa-code"></i> مطور بواسطة <strong>Fawry Team</strong></p>
-        <div class="copyright">
-            <p>© 2025 Fawry Delivery - جميع الحقوق محفوظة</p>
+        <div class="footer-content">
+            <div class="logo">
+                <div class="logo-icon">🚚</div>
+                <span>تطبيق المندوب</span>
+            </div>
+            <div class="footer-links">
+                <a href="index.html">الرئيسية</a>
+                <a href="CUSTOMER_APP_LANDING.html">تطبيق العميل</a>
+                <a href="MERCHANT_APP_LANDING_PAGE.html">تطبيق التاجر</a>
+                <a href="ADMIN_LANDING_PAGE.html">لوحة التحكم</a>
+            </div>
+            <div class="social-links">
+                <a href="#"><i class="fab fa-twitter"></i></a>
+                <a href="#"><i class="fab fa-linkedin-in"></i></a>
+                <a href="#"><i class="fab fa-github"></i></a>
+            </div>
         </div>
     </footer>
-
-    <script>
-        // Scroll Animation
-        const fadeElements = document.querySelectorAll('.fade-in');
-
-        const observer = new IntersectionObserver((entries) => {
-            entries.forEach(entry => {
-                if (entry.isIntersecting) {
-                    entry.target.classList.add('visible');
-                }
-            });
-        }, { threshold: 0.1 });
-
-        fadeElements.forEach(el => observer.observe(el));
-
-        // Smooth scroll for anchor links
-        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
-            anchor.addEventListener('click', function (e) {
-                e.preventDefault();
-                const target = document.querySelector(this.getAttribute('href'));
-                if (target) {
-                    target.scrollIntoView({ behavior: 'smooth' });
-                }
-            });
-        });
-
-        // Parallax effect on hero
-        window.addEventListener('scroll', () => {
-            const hero = document.querySelector('.hero-content');
-            const scrolled = window.pageYOffset;
-            if (hero && scrolled < window.innerHeight) {
-                hero.style.transform = `translateY(${scrolled * 0.3}px)`;
-                hero.style.opacity = 1 - (scrolled / window.innerHeight);
-            }
-        });
-    </script>
 </body>
 
 </html>
