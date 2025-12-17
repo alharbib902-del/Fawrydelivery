@@ -27,6 +27,62 @@
             --glass-border: rgba(255, 255, 255, 0.1);
         }
 
+        /* Light Mode Variables */
+        body.light-mode {
+            --dark-bg: #F8FAFC;
+            --dark-surface: #FFFFFF;
+            --dark-card: #F1F5F9;
+            --text-light: #0F172A;
+            --text-muted: #64748B;
+            --glass: rgba(0, 0, 0, 0.05);
+            --glass-border: rgba(0, 0, 0, 0.1);
+        }
+
+        /* Theme Toggle Button */
+        .theme-toggle {
+            background: var(--glass);
+            border: 1px solid var(--glass-border);
+            color: var(--text-light);
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            transition: all 0.3s;
+            margin-right: 15px;
+        }
+
+        .theme-toggle:hover {
+            background: var(--glass-border);
+            color: var(--primary);
+        }
+
+        /* Performance Optimizations */
+        .hero-graphic,
+        .phone-mockup,
+        .floating-shapes {
+            will-change: transform;
+        }
+
+        @media (max-width: 768px) {
+            .hero-graphic::before {
+                animation: none !important;
+                /* Save battery on mobile */
+                display: none;
+            }
+
+            .phone-mockup {
+                animation: none !important;
+            }
+
+            * {
+                -webkit-font-smoothing: auto;
+                /* Reduce rendering load */
+            }
+        }
+
         * {
             margin: 0;
             padding: 0;
@@ -180,7 +236,7 @@
         .btn {
             padding: 16px 35px;
             border-radius: 50px;
-            font-family: 'Cairo';
+            font-family: 'Tajawal';
             font-weight: 700;
             font-size: 1rem;
             cursor: pointer;
@@ -500,7 +556,7 @@
             border: 1px solid var(--glass-border);
             border-radius: 50px;
             color: var(--text-muted);
-            font-family: 'Cairo';
+            font-family: 'Tajawal';
             font-weight: 600;
             cursor: pointer;
             transition: all 0.3s;
@@ -1531,6 +1587,9 @@
             <li><a href="#investor">للمستثمر</a></li>
             <li><a href="#contact">تواصل</a></li>
         </ul>
+        <button class="theme-toggle" onclick="toggleTheme()" aria-label="Toggle Theme">
+            <i class="fas fa-moon"></i>
+        </button>
         <a href="#investor" class="nav-cta">احجز عرض للمستثمر</a>
         <button class="mobile-menu-btn" onclick="toggleMobileMenu()">
             <i class="fas fa-bars"></i>
@@ -2050,6 +2109,34 @@
     <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
     <script>
         AOS.init({ duration: 800, easing: 'ease-out-cubic', once: true });
+
+        // Theme Toggle
+        function toggleTheme() {
+            document.body.classList.toggle('light-mode');
+            const icon = document.querySelector('.theme-toggle i');
+            const isLight = document.body.classList.contains('light-mode');
+
+            if (isLight) {
+                icon.classList.remove('fa-moon');
+                icon.classList.add('fa-sun');
+                localStorage.setItem('theme', 'light');
+            } else {
+                icon.classList.remove('fa-sun');
+                icon.classList.add('fa-moon');
+                localStorage.setItem('theme', 'dark');
+            }
+        }
+
+        // Initialize Theme
+        const savedTheme = localStorage.getItem('theme');
+        if (savedTheme === 'light') {
+            document.body.classList.add('light-mode');
+            const icon = document.querySelector('.theme-toggle i');
+            if (icon) {
+                icon.classList.remove('fa-moon');
+                icon.classList.add('fa-sun');
+            }
+        }
 
         // Mobile menu toggle
         function toggleMobileMenu() {
